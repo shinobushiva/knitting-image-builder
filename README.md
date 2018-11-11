@@ -1,4 +1,4 @@
-# supplier-similarity
+# knitting-image-builder
 
 > A Vue.js project
 
