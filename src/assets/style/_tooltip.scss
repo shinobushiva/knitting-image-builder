@@ -1,0 +1,64 @@
+.tooltip-item {
+  $base-border-radius: 3px !default;
+  $base-line-height: 1.5em !default;
+  $tooltip-max-width: 16em;
+  $tooltip-arrow-width: 8px;
+  $tooltip-shadow: 0 2px 2px $medium-gray;
+  $tooltip-distance-from-item: 3em;
+  $tooltip-arrow-distance-from-box: -1.3em;
+
+  background: $base-background-color;
+  border: $base-border;
+  border-radius: $base-border-radius;
+  display: inline-block;
+  padding: .5em 1em;
+  position: relative;
+  text-align: center;
+
+  p {
+    color: $dark-gray;
+    line-height: $base-line-height;
+    margin: 0;
+  }
+
+  .tooltip {
+    // @include position(absolute, null 0 $tooltip-distance-from-item 0);
+    // @include transition(all .2s ease-in-out);
+
+    background-color: $base-background-color;
+    border-radius: $base-border-radius;
+    box-shadow: $tooltip-shadow;
+    color: $dark-gray;
+    font-size: .9em; // Make sure you use -webkit-backface-visibility: hidden; on the body element to prevent 1px nudging bugs.
+    line-height: 1.5em;
+    margin: 0 auto;
+    max-width: $tooltip-max-width;
+    opacity: 0;
+    padding: 1em;
+    text-align: center;
+    visibility: hidden;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    &:after {
+      // @include position(absolute, null 0 null 0);
+
+      border: $tooltip-arrow-width solid transparent;
+      bottom: $tooltip-arrow-distance-from-box;
+      color: $white;
+      content: "▼";
+      font-size: 1.4em;
+      margin-left: -$tooltip-arrow-width;
+      text-align: center;
+      text-shadow: $tooltip-shadow;
+    }
+  }
+
+  &:focus,
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+}

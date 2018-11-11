@@ -1,0 +1,9 @@
+// global.scss
+@charset "utf-8";
+
+@import "variables";
+@import "tooltip";
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}

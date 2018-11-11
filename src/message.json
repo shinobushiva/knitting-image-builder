@@ -1,0 +1,592 @@
+{
+    "ja": {
+        "search": "検索",
+        "all": "すべて",
+        "self": "自分",
+        "kind": "種別",
+        "none": "なし",
+        "user": "ユーザー",
+        "saved_temporary": "一時保存しました",
+        "date_ranges": {
+        "all": "すべて",
+        "7days": "7日以内",
+        "2weeks": "2週間以内",
+        "30days": "30日以内",
+        "3months": "3ヶ月以内",
+        "6months": "半年以内",
+        "thisyear": "今年"
+        },
+        "date": {
+        "abbr_day_names": [
+            "日",
+            "月",
+            "火",
+            "水",
+            "木",
+            "金",
+            "土"
+        ],
+        "abbr_month_names": [
+            null,
+            "1月",
+            "2月",
+            "3月",
+            "4月",
+            "5月",
+            "6月",
+            "7月",
+            "8月",
+            "9月",
+            "10月",
+            "11月",
+            "12月"
+        ],
+        "day_names": [
+            "日曜日",
+            "月曜日",
+            "火曜日",
+            "水曜日",
+            "木曜日",
+            "金曜日",
+            "土曜日"
+        ],
+        "formats": {
+            "default": "%Y/%m/%d",
+            "long": "%Y年%m月%d日(%a)",
+            "middle": "%Y年%m月%d日",
+            "short": "%m/%d",
+            "long_dot": "%Y.%m.%d"
+        },
+        "month_names": [
+            null,
+            "1月",
+            "2月",
+            "3月",
+            "4月",
+            "5月",
+            "6月",
+            "7月",
+            "8月",
+            "9月",
+            "10月",
+            "11月",
+            "12月"
+        ],
+        "order": [
+            ":year",
+            ":month",
+            ":day"
+        ]
+        },
+        "datetime": {
+        "before": "前",
+        "distance_in_words": {
+            "about_x_hours": {
+            "one": "約1時間",
+            "other": "約%{count}時間"
+            },
+            "about_x_months": {
+            "one": "約1ヶ月",
+            "other": "約%{count}ヶ月"
+            },
+            "about_x_years": {
+            "one": "約1年",
+            "other": "約%{count}年"
+            },
+            "almost_x_years": {
+            "one": "1年弱",
+            "other": "%{count}年弱"
+            },
+            "half_a_minute": "30秒前後",
+            "less_than_x_minutes": {
+            "one": "1分以内",
+            "other": "%{count}分未満"
+            },
+            "less_than_x_seconds": {
+            "one": "1秒以内",
+            "other": "%{count}秒未満"
+            },
+            "over_x_years": {
+            "one": "1年以上",
+            "other": "%{count}年以上"
+            },
+            "x_days": {
+            "one": "1日",
+            "other": "%{count}日"
+            },
+            "x_minutes": {
+            "one": "1分",
+            "other": "%{count}分"
+            },
+            "x_months": {
+            "one": "1ヶ月",
+            "other": "%{count}ヶ月"
+            },
+            "x_seconds": {
+            "one": "1秒",
+            "other": "%{count}秒"
+            }
+        },
+        "prompts": {
+            "day": "日",
+            "hour": "時",
+            "minute": "分",
+            "month": "月",
+            "second": "秒",
+            "year": "年"
+        }
+        },
+        "number": {
+        "currency": {
+            "format": {
+            "delimiter": ",",
+            "format": "%n%u",
+            "precision": 0,
+            "separator": ".",
+            "significant": false,
+            "strip_insignificant_zeros": false,
+            "unit": "円"
+            }
+        },
+        "format": {
+            "delimiter": ",",
+            "precision": 3,
+            "separator": ".",
+            "significant": false,
+            "strip_insignificant_zeros": false
+        },
+        "human": {
+            "decimal_units": {
+            "format": "%n %u",
+            "units": {
+                "billion": "十億",
+                "million": "百万",
+                "quadrillion": "千兆",
+                "thousand": "千",
+                "trillion": "兆",
+                "unit": ""
+            }
+            },
+            "format": {
+            "delimiter": "",
+            "precision": 3,
+            "significant": true,
+            "strip_insignificant_zeros": true
+            },
+            "storage_units": {
+            "format": "%n%u",
+            "units": {
+                "byte": "バイト",
+                "gb": "ギガバイト",
+                "kb": "キロバイト",
+                "mb": "メガバイト",
+                "tb": "テラバイト"
+            }
+            }
+        },
+        "percentage": {
+            "format": {
+            "delimiter": "",
+            "format": "%n%"
+            }
+        },
+        "precision": {
+            "format": {
+            "delimiter": ""
+            }
+        }
+        },
+        "support": {
+        "array": {
+            "last_word_connector": "と",
+            "two_words_connector": "と",
+            "words_connector": "と"
+        }
+        },
+        "time": {
+        "am": "午前",
+        "formats": {
+            "default": "%Y/%m/%d %H:%M:%S",
+            "long": "%Y年%m月%d日(%a) %H時%M分%S秒 %z",
+            "short": "%y/%m/%d %H:%M"
+        },
+        "pm": "午後"
+        },
+        "navigation": {
+        "load_next_page": "さらに表示する"
+        },
+        "business": {
+        "select": "業種を選択してください",
+        "no_business": "未設定",
+        "apparel": "アパレルメーカー・ブランド",
+        "retailer": "小売・卸販売",
+        "trading": "アパレル商社、OEM、ODM",
+        "factory": "縫製工場・生地資材メーカー",
+        "creator": "クリエイティブ・制作・デザイン",
+        "developer": "店舗開発・建築設計",
+        "general": "一般企業",
+        "education": "学校・自治体・非営利団体",
+        "individual": "個人"
+        },
+        "employees": {
+        "select": "従業員数を選択してください",
+        "no_employees": "未設定",
+        "personal": "個人事業",
+        "under_10": "〜10人",
+        "under_50": "10人〜50人",
+        "under_100": "50人〜100人",
+        "under_500": "100人〜500人",
+        "under_1000": "500人〜1000人",
+        "over_1000": "1000人〜"
+        },
+        "motivation": {
+        "select": "登録背景・目的を選択してください",
+        "no_motivation": "未設定",
+        "on_apparel": "アパレル事業従事者",
+        "on_new_business": "新規事業従事者",
+        "startup": "これからアパレルブランドを始めたい",
+        "interested_apparel": "アパレル生産に興味がある",
+        "interested_uniform": "ユニフォーム生産に興味がある",
+        "others": "その他"
+        },
+        "industry": {
+        "select": "顧客属性を選択してください",
+        "no_industry": "未設定",
+        "industry_brand": "Brand",
+        "industry_company": "Company",
+        "industry_seed": "Seed"
+        },
+        "segments": [
+        "小売り（アパレル・雑貨）",
+        "アパレルメーカー・ブランド",
+        "アパレル商社・OEM・ODM・工場",
+        "企画・イベント・デザイン会社",
+        "その他一般企業・自治体・非営利団体",
+        "個人"
+        ],
+        "weare_segments": [
+        "一般企業",
+        "団体・チーム",
+        "企画・イベント・デザイン会社",
+        "学校関係・自治体・施設",
+        "個人"
+        ],
+        "supplier_segments": [
+        "会社",
+        "個人"
+        ],
+        "part_number": {
+        "fabric_category": {
+            "knit": "ニット",
+            "cloth": "布帛",
+            "denim": "デニム",
+            "leather": "レザー",
+            "sports": "スポーツ",
+            "other": "その他",
+            "braiding": "編み上げ"
+        },
+        "item_category": {
+            "knit": {
+            "pants": "パンツ",
+            "skirt": "スカート",
+            "cutsew": "カットソー",
+            "camisole": "キャミソール",
+            "cardigan": "カーディガン",
+            "polo": "ポロ",
+            "onep": "ワンピース",
+            "parker": "パーカー",
+            "sweat": "スウェット",
+            "jacket": "ジャケット",
+            "vest": "ベスト",
+            "coat": "コート",
+            "blouson": "ブルゾン",
+            "hat": "帽子"
+            },
+            "cloth": {
+            "cutsew": "カットソー",
+            "shirt": "シャツ",
+            "pants": "パンツ",
+            "skirt": "スカート",
+            "salopette": "サロペット",
+            "onep": "ワンピース",
+            "dress": "ドレス",
+            "parker": "マウンテンパーカー",
+            "jacket": "ジャケット",
+            "vest": "ベスト",
+            "coat": "コート",
+            "blouson": "ブルゾン",
+            "down": "ダウン",
+            "hat": "帽子"
+            },
+            "denim": {
+            "jumper": "Gジャン",
+            "shirt": "シャツ",
+            "pants": "パンツ",
+            "skirt": "スカート",
+            "accessory": "小物"
+            },
+            "leather": {
+            "accessory": "小物",
+            "wear": "ウェア"
+            },
+            "sports": {
+            "underwear": "インナー上下",
+            "jerseytops": "ジャージ (トップス)",
+            "jerseybottoms": "ジャージ(ボトム）"
+            },
+            "other": {
+            "pajamas": "パジャマ",
+            "apron": "エプロン",
+            "accessory": "小物",
+            "bag": "かばん",
+            "baby": "ベビー",
+            "sty": "スタイ",
+            "kids": "キッズ",
+            "work_wear": "作業着",
+            "japanese_clothes": "和服",
+            "rainitem": "レインアイテム",
+            "bathing": "水着",
+            "under_wear": "下着",
+            "pet": "ペット服",
+            "cloth": "生地",
+            "pattern": "パターン",
+            "other": "その他"
+            },
+            "braiding": {
+            "braiding": "編み上げ"
+            }
+        }
+        },
+        "errors": {
+        "format": "%{attribute}%{message}",
+        "messages": {
+            "accepted": "を受諾してください",
+            "blank": "を入力してください",
+            "present": "は入力しないでください",
+            "confirmation": "と%{attribute}の入力が一致しません",
+            "empty": "を入力してください",
+            "equal_to": "は%{count}にしてください",
+            "even": "は偶数にしてください",
+            "exclusion": "は予約されています",
+            "greater_than": "は%{count}より大きい値にしてください",
+            "greater_than_or_equal_to": "は%{count}以上の値にしてください",
+            "inclusion": "は一覧にありません",
+            "invalid": "は不正な値です",
+            "less_than": "は%{count}より小さい値にしてください",
+            "less_than_or_equal_to": "は%{count}以下の値にしてください",
+            "not_a_number": "は数値で入力してください",
+            "not_an_integer": "は整数で入力してください",
+            "odd": "は奇数にしてください",
+            "record_invalid": "バリデーションに失敗しました。 %{errors}",
+            "restrict_dependent_destroy": "%{record}が存在しているので削除できません",
+            "taken": "が無効です",
+            "taken_real": "はすでに存在します",
+            "too_long": "は%{count}文字以内で入力してください",
+            "too_short": "は%{count}文字以上で入力してください",
+            "wrong_length": "は%{count}文字で入力してください",
+            "other_than": "は%{count}以外の値にしてください",
+            "file_too_large": "ファイルサイズが大きすぎます(最大%{max_file_size}まで)"
+        },
+        "template": {
+            "body": "次の項目を確認してください",
+            "header": {
+            "one": "%{model}にエラーが発生しました",
+            "other": "%{model}に%{count}個のエラーが発生しました"
+            }
+        }
+        },
+        "word": {
+        "file": "ファイル"
+        },
+        "flash": {
+        "success": {
+            "create": "作成しました",
+            "update": "更新しました",
+            "destroy": "削除しました"
+        },
+        "user_sessions": {
+            "create": {
+            "failure": "メールアドレスまたはパスワードが間違っています",
+            "locked": "一定回数間違ったためログインを制限しております。時間をおいて再度お試しください"
+            }
+        },
+        "atelier_base": {
+            "authenticate": {
+            "not": "ログインしてください"
+            }
+        },
+        "contact": {
+            "send_success": "お問い合わせ頂き、ありがとうございました"
+        },
+        "invitation": {
+            "faile": {
+            "registrate": "招待登録に失敗しました",
+            "send_mail": "招待メールに失敗しました",
+            "include_can_not_invite_emails": "招待できないメールアドレスが含まれています。確認してください"
+            },
+            "notice": {
+            "invalid_url": "URLが不正か、リンク期限が過ぎています",
+            "login_for_invitation": "招待を受けるためにはログインが必要です",
+            "entry_for_invitation": "招待を受けるためには登録が必要です",
+            "access_denied": "招待リンクにアセスできませんでした。ログインしているユーザを確認して下さい",
+            "no_send_target": "送信対象となるメールアドレスが入力されていませんでした"
+            }
+        },
+        "clients": {
+            "create": {
+            "notice": "ユーザ登録されました"
+            }
+        },
+        "items": {
+            "upload": {
+            "success": "アップロードしました",
+            "no_attachments": "添付ファイルが選択されていません"
+            }
+        },
+        "manager": {
+            "topics": {
+            "assigns": {
+                "add_failed": "担当者の追加に失敗しました",
+                "remove_failed": "担当者の削除に失敗しました"
+            }
+            }
+        },
+        "supplier": {
+            "created": "登録しました",
+            "created_failed": "登録に失敗しました",
+            "updated": "保存しました",
+            "destroyed": "削除しました"
+        },
+        "not_authorized": "対象ページへの権限がありません"
+        },
+        "pattern": {
+        "arrangement_text": [
+            "新規手配",
+            "持ち込み",
+            "工場手配"
+        ]
+        },
+        "material": {
+        "arrangement_text": [
+            "新規手配",
+            "持ち込み"
+        ]
+        },
+        "second_process": {
+        "arrangement_text": [
+            "なし",
+            "プリント",
+            "刺繍",
+            "製品洗い",
+            "染色",
+            "ダメージ加工",
+            "プリーツ",
+            "その他加工",
+            "その他外注"
+        ],
+        "sub_arrangement": {
+            "sub_arrangement_not_set": "未設定",
+            "print_silkscreen": "シルクスクリーン",
+            "print_transcription": "転写",
+            "print_inkjet": "インクジェット",
+            "print_injet_fabric": "インクジェット（生地）",
+            "print_sublimation": "昇華",
+            "print_sublimation_fabric": "昇華（生地）",
+            "print_flock": "フロッキー",
+            "print_lame": "ラメ",
+            "print_prestige": "箔",
+            "print_rubber": "ラバー",
+            "embroidery_onepoint": "ワンポイント",
+            "embroidery_fabric": "生地刺繍",
+            "embroidery_emblem": "ワッペン",
+            "embroidery_piko": "ピコ",
+            "embroidery_pintuck": "ピンタック",
+            "embroidery_sagara": "サガラ",
+            "embroidery_shirring": "シャーリング",
+            "embroidery_smokking": "スモッキング",
+            "embroidery_scallop": "スカラップ",
+            "embroidery_laser_cut": "レーザーカット",
+            "embroidery_needle_punch": "ニードルパンチ",
+            "embroidery_rhinestone": "ラインストーン",
+            "embroidery_spangle": "スパンコール",
+            "wash_one": "ワンウォッシュ",
+            "wash_bleach": "ブリーチ",
+            "wash_bio": "バイオ",
+            "wash_ball_bio": "ボールバイオ",
+            "wash_stone": "ストーン",
+            "wash_stone_bio": "ストーンバイオ",
+            "wash_stone_bio_bleach": "ストーンバイオブリーチ",
+            "stain_product": "製品染め",
+            "stain_overdie": "オーバーダイ",
+            "stain_discharge": "抜染",
+            "damage_used": "USED",
+            "damage_sandblast": "サンドブラスト",
+            "damage_powder": "パウダー",
+            "damage_chemical": "ケミカル",
+            "damage_whiskers": "ヒゲ",
+            "damage_paint": "ペイント",
+            "pleat": "-",
+            "other_process": "-",
+            "others_process_water_repellant": "撥水",
+            "others_process_wrinkle": "シワ加工",
+            "others_process_wrinkle_resistant": "形態安定",
+            "others_process_other": "その他",
+            "other_order": "-",
+            "other_order_dot_button": "ドットボタン",
+            "other_order_button_hole": "ボタンホール",
+            "other_order_special_sewing_machine": "特殊ミシン",
+            "other_order_other": "その他"
+        }
+        },
+        "lot": {
+        "kind": {
+            "offer": "見積もり",
+            "sample": "サンプル",
+            "bulk": "量産"
+        },
+        "press": {
+            "press_not_set": "未定",
+            "press_necessary": "要",
+            "press_unnecessary": "不要"
+        },
+        "delivery_form": {
+            "delivery_not_set": "未定",
+            "delivery_fold": "たたみ",
+            "delivery_hanger": "ハンガー",
+            "delivery_no_packing": "包装不要"
+        },
+        "shipping_status": {
+            "ship_done": "出荷済み",
+            "unship": "未出荷",
+            "receive_done": "到着済み",
+            "unreceive": "未到着"
+        },
+        "has_pre_bulk_sampling": {
+            "pre_bulk_sampling_not_set": "未定",
+            "pre_bulk_sampling_none": "なし",
+            "pre_bulk_sampling_before_sewing": "あり(裁断前)",
+            "pre_bulk_sampling_after_sewing": "あり(裁断後)"
+        },
+        "has_pre_delivery_inspection": {
+            "pre_delivery_inspection_not_set": "未定",
+            "pre_delivery_inspection_none": "なし",
+            "pre_delivery_inspection_diagonal": "ナナメ",
+            "pre_delivery_inspection_each_color": "各色",
+            "pre_delivery_inspection_each_size": "各サイズ",
+            "pre_delivery_inspection_all_sku": "全SKU",
+            "pre_delivery_inspection_other": "その他"
+        }
+        },
+        "supplier_sheet": {
+        "name": "サプライヤースケジュール表",
+        "appear": "掲載中",
+        "not_appear": "掲載しません",
+        "requesting": "依頼中",
+        "scheduled": "依頼予定"
+        },
+        "line_notification": {
+        "myope_message": "シタテルから新しいメッセージが届きました。マイオペレーターでの確認をお願いします",
+        "mypage_message": "シタテルから新しいメッセージが届きました。マイページでの確認をお願いします"
+        }
+    }
+}
