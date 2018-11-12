@@ -30,8 +30,8 @@ export default class StandardCollarFactory {
 
     knit.createBody = function(body, neck, sleeve) {
 
-      const shoulderOffset = 2
-    
+      const bodyAdd = (body.shoulder - body.bodyWidth)/2
+      
       const sb = (body.shoulder - body.bottomHemWidth)/2
       const drop = Math.min(neck.frontDrop, neck.backDrop)
       const paths = []
@@ -66,13 +66,13 @@ export default class StandardCollarFactory {
             [neck.width, 0]
           ]
           path += this.curvegenerator(line)
-        }
+        }console.log(path, bodyAdd, body)
         {
           const line = [
             [neck.width, 0],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
             this.handles.sleeveConnection.vert,
             [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
           ]
@@ -105,9 +105,9 @@ export default class StandardCollarFactory {
           const line = [
             [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole],
             this.handles.sleeveConnection.mvert,
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
             [0, 0]
           ]
           path += this.concatify(this.curvegenerator(line))

@@ -25,6 +25,7 @@ export default class HighNeckFactory {
     knit.createHighNeckBody = function(body, neck, sleeve) {
     
       const sb = (body.shoulder - body.bottomHemWidth)/2
+      const bodyAdd = (body.shoulder - body.bodyWidth)/2
       const drop = neck.frontDrop
       const paths = []
 
@@ -58,9 +59,9 @@ export default class HighNeckFactory {
         {
           const line = [
             [neck.width, 0],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
             this.handles.sleeveConnection.vert,
             [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
           ]
@@ -93,9 +94,9 @@ export default class HighNeckFactory {
           const line = [
             [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole],
             this.handles.sleeveConnection.mvert,
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 + body.shoulderOffset, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
             [0, 0],
           ]
           path += this.concatify(this.curvegenerator(line))

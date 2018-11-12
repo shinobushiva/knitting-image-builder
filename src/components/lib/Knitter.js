@@ -13,8 +13,9 @@ export default class Knitter {
 
   createSleeve(body, neck, sleeve) {
     const paths = []
+    const bodyAdd = (body.shoulder - body.bodyWidth)/2
 
-    const p = neck.width + (body.shoulder - neck.width)/2 - body.shoulderOffset
+    const p = neck.width + (body.shoulder - neck.width)/2 + bodyAdd
     const ang = Math.max(-1, (0 - body.shoulderDrop) / (p - neck.width))
     const theta = -Math.atan(ang)
     const sx = Math.cos(theta) * (sleeve.length - sleeve.cuffRibLength)
@@ -55,13 +56,13 @@ export default class Knitter {
         const line = [
           [p + sx - cx, body.shoulderDrop + sy + cy],
           this.handles.sleeveSqueezeBottom.vert,
-          [p + body.shoulderOffset , body.shoulderDrop + sleeve.armHole]
+          [p - bodyAdd, body.shoulderDrop + sleeve.armHole]
         ]
         path += this.concatify(this.curvegenerator(line))
       }
       {
         const line = [
-          [p + body.shoulderOffset , body.shoulderDrop + sleeve.armHole],
+          [p - bodyAdd , body.shoulderDrop + sleeve.armHole],
           this.handles.sleeveConnection.vert,
           [p, body.shoulderDrop]
         ]

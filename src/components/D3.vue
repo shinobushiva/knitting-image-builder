@@ -79,21 +79,42 @@ textarea#body {
           @keyup='onChange("k.height", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='アームホール' 
-          :value='flatBody["k.sleeve.armHole"]' 
+          label='肩幅' 
+          :value='flatBody["k.shoulder"]' 
           type="number"
-          @change='onChange("k.sleeve.armHole", $event)'
-          @keyup='onChange("k.sleeve.armHole", $event)')
+          @change='onChange("k.shoulder", $event)'
+          @keyup='onChange("k.shoulder", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='首幅' 
+          label='身巾' 
+          :value='flatBody["k.bodyWidth"]' 
+          type="number"
+          @change='onChange("k.bodyWidth", $event)'
+          @keyup='onChange("k.bodyWidth", $event)')
+      v-flex.py-2(xs12 sm2)
+        v-text-field(
+          label='裾巾' 
+          :value='flatBody["k.bottomHemWidth"]' 
+          type="number"
+          @change='onChange("k.bottomHemWidth", $event)'
+          @keyup='onChange("k.bottomHemWidth", $event)')
+      v-flex.py-2(xs12 sm2)
+        v-text-field(
+          label='裾リブ巾' 
+          :value='flatBody["k.bottomRibLength"]' 
+          type="number"
+          @change='onChange("k.bottomRibLength", $event)'
+          @keyup='onChange("k.bottomRibLength", $event)')
+      v-flex.py-2(xs12 sm2)
+        v-text-field(
+          label='首巾' 
           :value='flatBody["k.neck.width"]' 
           type="number"
           @change='onChange("k.neck.width", $event)'
           @keyup='onChange("k.neck.width", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='首周り厚み' 
+          label='首リブ巾' 
           :value='flatBody["k.neck.thickness"]' 
           type="number"
           @change='onChange("k.neck.thickness", $event)'
@@ -112,14 +133,13 @@ textarea#body {
           type="number"
           @change='onChange("k.neck.backDrop", $event)'
           @keyup='onChange("k.neck.backDrop", $event)')
-    v-layout(row wrap)
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='肩幅' 
-          :value='flatBody["k.shoulder"]' 
+          label='アームホール' 
+          :value='flatBody["k.sleeve.armHole"]' 
           type="number"
-          @change='onChange("k.shoulder", $event)'
-          @keyup='onChange("k.shoulder", $event)')
+          @change='onChange("k.sleeve.armHole", $event)'
+          @keyup='onChange("k.sleeve.armHole", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
           label='肩下がり' 
@@ -129,13 +149,6 @@ textarea#body {
           @keyup='onChange("k.shoulderDrop", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='肩オフセット' 
-          :value='flatBody["k.shoulderOffset"]' 
-          type="number"
-          @change='onChange("k.shoulderOffset", $event)'
-          @keyup='onChange("k.shoulderOffset", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
           label='袖長さ' 
           :value='flatBody["k.sleeve.length"]' 
           type="number"
@@ -143,19 +156,18 @@ textarea#body {
           @keyup='onChange("k.sleeve.length", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='袖幅' 
+          label='袖口巾' 
           :value='flatBody["k.sleeve.width"]' 
           type="number"
           @change='onChange("k.sleeve.width", $event)'
           @keyup='onChange("k.sleeve.width", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='袖厚み' 
+          label='袖リブ巾' 
           :value='flatBody["k.neck.frontDrop"]' 
           type="number"
           @change='onChange("k.neck.frontDrop", $event)'
           @keyup='onChange("k.neck.frontDrop", $event)')
-          v-flex.py-2(xs12 sm2)
     //- v-layout(row wrap)
     //-   template(v-for='(v, k, i) in flatBody')
     //-     v-flex(xs2 align-baseline)
@@ -198,9 +210,10 @@ export default {
   computed: {
     defaultBodyJson () {
       return this.toJson({
-        shoulder: 60,
+        version: 2,
         shoulderDrop: 5,
-        shoulderOffset: 0,
+        shoulder: 60,
+        bodyWidth: 65,
         height: 52,
         bottomHemWidth: 45,
         bottomRibLength: 5,
@@ -253,7 +266,7 @@ export default {
   },
   mounted () {
     const json = localStorage.getItem('inprogress')
-    if (json) this.bodyJson = json
+    if (json && json.version >= 1) this.bodyJson = json
     this.onRestart()
   },
   methods: {
