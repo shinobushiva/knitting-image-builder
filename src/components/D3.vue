@@ -164,15 +164,15 @@ textarea#body {
       v-flex.py-2(xs12 sm2)
         v-text-field(
           label='袖リブ巾' 
-          :value='flatBody["k.neck.frontDrop"]' 
+          :value='flatBody["k.sleeve.cuffRibLength"]' 
           type="number"
-          @change='onChange("k.neck.frontDrop", $event)'
-          @keyup='onChange("k.neck.frontDrop", $event)')
+          @change='onChange("k.sleeve.cuffRibLength", $event)'
+          @keyup='onChange("k.sleeve.cuffRibLength", $event)')
     //- v-layout(row wrap)
     //-   template(v-for='(v, k, i) in flatBody')
     //-     v-flex(xs2 align-baseline)
     //-       v-text-field(
-    //-         :label='k' 
+    //-         :label='k'
     //-         :value='v' 
     //-         type="number"
     //-         @change='onChange(k, $event)'
