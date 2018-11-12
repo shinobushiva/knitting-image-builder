@@ -79,7 +79,7 @@ textarea#body {
           @keyup='onChange("k.height", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
-          label='肩幅' 
+          label='肩巾' 
           :value='flatBody["k.shoulder"]' 
           type="number"
           @change='onChange("k.shoulder", $event)'
