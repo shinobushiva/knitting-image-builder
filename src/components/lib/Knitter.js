@@ -34,6 +34,9 @@ export default class Knitter {
     if (!this.handles.sleeveSqueezeBottom.vert) {
       this.handles.sleeveSqueezeBottom.vert = [p + sx - cx, body.shoulderDrop + sy + cy]
     }
+    if (!this.handles.sleeveLibSqueeze.vert) {
+      this.handles.sleeveLibSqueeze.vert = [p + sx + scx, body.shoulderDrop + sy + scy]
+    }
 
     {
       let path = ''
@@ -70,14 +73,41 @@ export default class Knitter {
       }
       paths.push(path)
     }
+    const dist = Math.sqrt( 
+      Math.pow(this.handles.sleeveLibSqueeze.vert.x - p + sx + scx, 2),
+      Math.pow(this.handles.sleeveLibSqueeze.vert.y - body.shoulderDrop + sy + scy)
+    )
     //cuff
     {
+      const v = this.handles.sleeveLibSqueeze.vert
+      let d = Math.sqrt(
+        Math.pow(v[1] - (body.shoulderDrop + sy + scy), 2)
+      )
+      d *= (v[1] > (body.shoulderDrop + sy + scy)) ? 1 : -1
+      const vd = Math.sqrt(ccx*ccx + ccy*ccy)
+
+      const p1 = [p + sx + scx - ccx/vd * d, body.shoulderDrop + sy + scy + ccy/vd * d]
+      const p2 = [p + sx + scx - ccx + ccx/vd * d, 
+          body.shoulderDrop + sy + scy + ccy - ccy/vd * d]
+
       let path = ''
       {
         const line = [
           [p + sx, body.shoulderDrop + sy],
-          [p + sx + scx, body.shoulderDrop + sy + scy],
-          [p + sx + scx - ccx, body.shoulderDrop + sy + scy + ccy],
+          [p + sx + scx/2, body.shoulderDrop + sy + scy/2],
+          p1,
+          p1,
+          [p + sx + scx - ccx/2, body.shoulderDrop + sy + scy + ccy/2],
+          p2,
+          p2,
+          [p + sx - cx+ scx/2, body.shoulderDrop + sy + cy+ scy/2],
+          [p + sx - cx, body.shoulderDrop + sy + cy]
+        ]
+        path += this.curvegenerator(line)
+      }
+      paths.push(path)
+      {
+        const line = [
           [p + sx - cx, body.shoulderDrop + sy + cy],
           [p + sx, body.shoulderDrop + sy]
         ]

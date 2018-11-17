@@ -25,6 +25,14 @@ export default class StandardCollarFactory {
       backColler: {
         vert: undefined,
         mvert: undefined
+      },
+      bodyLibSqueeze: {
+        vert: undefined,
+        mvert: undefined
+      },
+      sleeveLibSqueeze: {
+        vert: undefined,
+        mvert: undefined
       }
     }
 
@@ -48,6 +56,10 @@ export default class StandardCollarFactory {
         this.handles.bodySqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
         this.handles.bodySqueeze.mvert = [-(body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
       }
+      if (!this.handles.bodyLibSqueeze.vert) {
+        this.handles.bodyLibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height],
+        this.handles.bodyLibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb, body.height]
+      }
       //around coller and arm
       {
         let path = ''
@@ -66,7 +78,7 @@ export default class StandardCollarFactory {
             [neck.width, 0]
           ]
           path += this.curvegenerator(line)
-        }console.log(path, bodyAdd, body)
+        }
         {
           const line = [
             [neck.width, 0],
@@ -121,11 +133,22 @@ export default class StandardCollarFactory {
           const line = [
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength],
             [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength],
-            [neck.width + (body.shoulder - neck.width)/2 - sb, body.height],
-            [-(body.shoulder - neck.width)/2 + sb, body.height],
-            [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength]
           ]
           path += this.linegenerator(line)
+        }
+        {
+          const line = [
+            [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength],
+            [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength/2],
+            [this.handles.bodyLibSqueeze.vert[0], body.height],
+            [this.handles.bodyLibSqueeze.vert[0], body.height],
+            [neck.width/2, body.height],
+            [this.handles.bodyLibSqueeze.mvert[0], body.height],
+            [this.handles.bodyLibSqueeze.mvert[0], body.height],
+            [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength/2],
+            [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength]
+          ]
+          path += this.concatify(this.curvegenerator(line))
         }
         paths.push(path)
       }
@@ -277,6 +300,7 @@ export default class StandardCollarFactory {
     if (!sleeve) {
       delete knit.handles.sleeveSqueezeTop
       delete knit.handles.sleeveSqueezeBottom
+      delete knit.handles.sleeveSqueezeLib
     }
 
     if (!rounded) {
