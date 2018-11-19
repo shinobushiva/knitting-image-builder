@@ -300,7 +300,7 @@ export default class StandardCollarFactory {
     if (!sleeve) {
       delete knit.handles.sleeveSqueezeTop
       delete knit.handles.sleeveSqueezeBottom
-      delete knit.handles.sleeveSqueezeLib
+      delete knit.handles.sleeveLibSqueeze
     }
 
     if (!rounded) {

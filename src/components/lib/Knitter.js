@@ -38,7 +38,6 @@ export default class Knitter {
     let theta = -Math.atan(ang)
     theta = Math.min(1, theta)
     theta = Math.max(0, theta)
-    
 
     const sx = Math.cos(theta) * (sleeve.length - sleeve.cuffRibLength)
     const sy = Math.sin(theta) * (sleeve.length - sleeve.cuffRibLength)

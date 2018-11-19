@@ -176,7 +176,7 @@ textarea#body {
             :value='flatBody["k.sleeve.useWidth"]'
           )
           v-text-field(
-            label='袖幅'
+            label='袖巾'
             :disabled='!flatBody["k.sleeve.useWidth"]'
             :value='flatBody["k.sleeve.width"]'
             type="number"
