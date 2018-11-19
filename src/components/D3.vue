@@ -157,10 +157,10 @@ textarea#body {
       v-flex.py-2(xs12 sm2)
         v-text-field(
           label='袖口巾' 
-          :value='flatBody["k.sleeve.width"]' 
+          :value='flatBody["k.sleeve.cuffWidth"]' 
           type="number"
-          @change='onChange("k.sleeve.width", $event)'
-          @keyup='onChange("k.sleeve.width", $event)')
+          @change='onChange("k.sleeve.cuffWidth", $event)'
+          @keyup='onChange("k.sleeve.cuffWidth", $event)')
       v-flex.py-2(xs12 sm2)
         v-text-field(
           label='袖リブ巾' 
@@ -168,6 +168,20 @@ textarea#body {
           type="number"
           @change='onChange("k.sleeve.cuffRibLength", $event)'
           @keyup='onChange("k.sleeve.cuffRibLength", $event)')
+      
+      v-flex.py-2(xs12 sm2)
+        v-layout
+          v-checkbox(hide-details
+            @change='onChangeWithoutEvent("k.sleeve.useWidth", $event)'
+            :value='flatBody["k.sleeve.useWidth"]'
+          )
+          v-text-field(
+            label='袖幅'
+            :disabled='!flatBody["k.sleeve.useWidth"]'
+            :value='flatBody["k.sleeve.width"]'
+            type="number"
+            @change='onChange("k.sleeve.width", $event)'
+            @keyup='onChange("k.sleeve.width", $event)')
     //- v-layout(row wrap)
     //-   template(v-for='(v, k, i) in flatBody')
     //-     v-flex(xs2 align-baseline)
@@ -210,7 +224,7 @@ export default {
   computed: {
     defaultBodyJson () {
       return this.toJson({
-        version: 2,
+        version: 4,
         shoulderDrop: 5,
         shoulder: 60,
         bodyWidth: 65,
@@ -224,6 +238,7 @@ export default {
           thickness: 1.5
         },
         sleeve: {
+          useWidth: false,
           armHole: 21,
           length: 50,
           width: 14,
@@ -266,13 +281,11 @@ export default {
   },
   mounted () {
     const json = localStorage.getItem('inprogress')
-    if (json && json.version >= 1) this.bodyJson = json
+    if (json && JSON.parse(json).version >= JSON.parse(this.bodyJson).version) this.bodyJson = json
     this.onRestart()
   },
   methods: {
-    onChange (key, event) {
-      if (!event.target) return
-
+    onChangeWithoutEvent(key, value) {
       const keys = key.split('\.')
       const data = JSON.parse(this.bodyJson)
       let target = data
@@ -281,9 +294,13 @@ export default {
         target = target[keys[i]]
         i++
       }
-      target[keys[i]] = parseFloat(event.target.value)
+      target[keys[i]] = value
       this.bodyJson = this.toJson(data)
       localStorage.setItem('inprogress', this.bodyJson)
+    },
+    onChange (key, event) {
+      if (!event.target) return
+      this.onChangeWithoutEvent(key, parseFloat(event.target.value))
     },
     onUpdate (target, key, event) {
       if (!event.target) return
