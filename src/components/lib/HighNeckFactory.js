@@ -20,13 +20,12 @@ export default class HighNeckFactory {
         vert: undefined,
         mvert: undefined
       },
-      bodyLibSqueeze: {
+      bodyRibSqueeze: {
         vert: undefined,
         mvert: undefined
       },
-      sleeveLibSqueeze: {
-        vert: undefined,
-        mvert: undefined
+      cuffRibSqueeze: {
+        vert: undefined
       }
     }
 
@@ -37,6 +36,8 @@ export default class HighNeckFactory {
       const drop = neck.frontDrop
       const paths = []
 
+      const bottomRibSqueeze = body.useBottomRibSqueeze ? body.bottomRibSqueeze : 0
+
       if (!this.handles.sleeveConnection.vert) {
         this.handles.sleeveConnection.vert = [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
         this.handles.sleeveConnection.mvert = [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
@@ -45,9 +46,9 @@ export default class HighNeckFactory {
         this.handles.bodySqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
         this.handles.bodySqueeze.mvert = [-(body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
       }
-      if (!this.handles.bodyLibSqueeze.vert) {
-        this.handles.bodyLibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height],
-        this.handles.bodyLibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb, body.height]
+      if (!this.handles.bodyRibSqueeze.vert) {
+        this.handles.bodyRibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb - bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
+        this.handles.bodyRibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb + bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
       }
       //around coller and arm
       {
@@ -128,13 +129,13 @@ export default class HighNeckFactory {
         {
           const line = [
             [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength],
-            [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength/2],
-            [this.handles.bodyLibSqueeze.vert[0], body.height],
-            [this.handles.bodyLibSqueeze.vert[0], body.height],
+            this.handles.bodyRibSqueeze.vert,
+            [neck.width + (body.shoulder - neck.width)/2 - bottomRibSqueeze - sb, body.height],
+            [neck.width + (body.shoulder - neck.width)/2 - bottomRibSqueeze - sb, body.height],
             [neck.width/2, body.height],
-            [this.handles.bodyLibSqueeze.mvert[0], body.height],
-            [this.handles.bodyLibSqueeze.mvert[0], body.height],
-            [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength/2],
+            [-(body.shoulder - neck.width)/2 + bottomRibSqueeze + sb, body.height],
+            [-(body.shoulder - neck.width)/2 + bottomRibSqueeze + sb, body.height],
+            this.handles.bodyRibSqueeze.mvert,
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength]
           ]
           path += this.concatify(this.curvegenerator(line))

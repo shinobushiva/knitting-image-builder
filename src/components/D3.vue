@@ -106,6 +106,19 @@ textarea#body {
           @change='onChange("k.bottomRibLength", $event)'
           @keyup='onChange("k.bottomRibLength", $event)')
       v-flex.py-2(xs12 sm2)
+        v-layout
+          v-checkbox(hide-details
+            @change='onChangeWithoutEvent("k.useBottomRibSqueeze", $event)'
+            :value='flatBody["k.useBottomRibSqueeze"]'
+          )
+          v-text-field(
+            label='裾リブ絞り'
+            :disabled='!flatBody["k.useBottomRibSqueeze"]'
+            :value='flatBody["k.bottomRibSqueeze"]'
+            type="number"
+            @change='onChange("k.bottomRibSqueeze", $event)'
+            @keyup='onChange("k.bottomRibSqueeze", $event)')
+      v-flex.py-2(xs12 sm2)
         v-text-field(
           label='首巾' 
           :value='flatBody["k.neck.width"]' 
@@ -168,7 +181,19 @@ textarea#body {
           type="number"
           @change='onChange("k.sleeve.cuffRibLength", $event)'
           @keyup='onChange("k.sleeve.cuffRibLength", $event)')
-      
+      v-flex.py-2(xs12 sm2)
+        v-layout
+          v-checkbox(hide-details
+            @change='onChangeWithoutEvent("k.sleeve.useCuffRibSqueeze", $event)'
+            :value='flatBody["k.sleeve.useCuffRibSqueeze"]'
+          )
+          v-text-field(
+            label='袖リブ絞り'
+            :disabled='!flatBody["k.sleeve.useCuffRibSqueeze"]'
+            :value='flatBody["k.sleeve.cuffRibSqueeze"]'
+            type="number"
+            @change='onChange("k.sleeve.cuffRibSqueeze", $event)'
+            @keyup='onChange("k.sleeve.cuffRibSqueeze", $event)')
       v-flex.py-2(xs12 sm2)
         v-layout
           v-checkbox(hide-details
@@ -224,13 +249,15 @@ export default {
   computed: {
     defaultBodyJson () {
       return this.toJson({
-        version: 4,
+        version: 6,
         shoulderDrop: 5,
         shoulder: 60,
         bodyWidth: 65,
         height: 52,
         bottomHemWidth: 45,
         bottomRibLength: 5,
+        useBottomRibSqueeze: false,
+        bottomRibSqueeze: 2,
         neck: {
           width: 16,
           frontDrop: 6,
@@ -243,7 +270,9 @@ export default {
           length: 50,
           width: 14,
           cuffWidth: 8,
-          cuffRibLength: 6
+          cuffRibLength: 6,
+          useCuffRibSqueeze: false,
+          cuffRibSqueeze: 0
         }
       })
     },

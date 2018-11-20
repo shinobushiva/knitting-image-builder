@@ -26,11 +26,11 @@ export default class StandardCollarFactory {
         vert: undefined,
         mvert: undefined
       },
-      bodyLibSqueeze: {
+      bodyRibSqueeze: {
         vert: undefined,
         mvert: undefined
       },
-      sleeveLibSqueeze: {
+      cuffRibSqueeze: {
         vert: undefined,
         mvert: undefined
       }
@@ -48,6 +48,8 @@ export default class StandardCollarFactory {
       
       const thickness = neck.thickness
 
+      const bottomRibSqueeze = body.useBottomRibSqueeze ? body.bottomRibSqueeze : 0
+
       if (!this.handles.sleeveConnection.vert) {
         this.handles.sleeveConnection.vert = [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
         this.handles.sleeveConnection.mvert = [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
@@ -56,9 +58,9 @@ export default class StandardCollarFactory {
         this.handles.bodySqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
         this.handles.bodySqueeze.mvert = [-(body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
       }
-      if (!this.handles.bodyLibSqueeze.vert) {
-        this.handles.bodyLibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height],
-        this.handles.bodyLibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb, body.height]
+      if (!this.handles.bodyRibSqueeze.vert) {
+        this.handles.bodyRibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb - bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
+        this.handles.bodyRibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb + bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
       }
       //around coller and arm
       {
@@ -139,13 +141,13 @@ export default class StandardCollarFactory {
         {
           const line = [
             [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength],
-            [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength/2],
-            [this.handles.bodyLibSqueeze.vert[0], body.height],
-            [this.handles.bodyLibSqueeze.vert[0], body.height],
+            this.handles.bodyRibSqueeze.vert,
+            [neck.width + (body.shoulder - neck.width)/2 - bottomRibSqueeze - sb, body.height],
+            [neck.width + (body.shoulder - neck.width)/2 - bottomRibSqueeze - sb, body.height],
             [neck.width/2, body.height],
-            [this.handles.bodyLibSqueeze.mvert[0], body.height],
-            [this.handles.bodyLibSqueeze.mvert[0], body.height],
-            [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength/2],
+            [-(body.shoulder - neck.width)/2 + bottomRibSqueeze + sb, body.height],
+            [-(body.shoulder - neck.width)/2 + bottomRibSqueeze + sb, body.height],
+            this.handles.bodyRibSqueeze.mvert,
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength]
           ]
           path += this.concatify(this.curvegenerator(line))
@@ -300,7 +302,7 @@ export default class StandardCollarFactory {
     if (!sleeve) {
       delete knit.handles.sleeveSqueezeTop
       delete knit.handles.sleeveSqueezeBottom
-      delete knit.handles.sleeveLibSqueeze
+      delete knit.handles.cuffRibSqueeze
     }
 
     if (!rounded) {
