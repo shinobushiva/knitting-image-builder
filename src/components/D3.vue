@@ -390,7 +390,7 @@ export default {
       this.height = bounds.height
       
       const scale = {x: 10*0.4, y: 10*0.4}
-      const ox = (this.width - this.body.neck.width*2*scale.x)/2
+      const ox = (this.width - this.body.neck.width*scale.x)/2
       const hh = this.body.height + this.body.bottomRibLength + this.body.neck.thickness - 10
       const oy = (this.height - hh*scale.y)/2
       // const scale = {x: 1, y: 1}
@@ -420,6 +420,9 @@ export default {
           v[0] = (pos.x - ox) / scale.x
           v[1] = (pos.y - oy) / scale.y
           self.$set(d, 'vert', v)
+
+          // const ox = (this.width - this.body.neck.width*2)/2
+          
           if (d.mvert) {
             const v = d.mvert
             const pos = self.getMousePos({clientX: d3.event.x, clientY: d3.event.y})
