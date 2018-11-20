@@ -44,7 +44,7 @@ textarea#body {
 .d3
   v-container(grid-list-md text-xs-center)
   v-layout(row wrap)
-    v-flex.pl-4.pr-4(xs12 sm7)
+    v-flex.px-4(xs12 sm7)
       v-layout(row wrap)
         v-flex(xs12 sm2)
           v-text-field(
@@ -55,7 +55,7 @@ textarea#body {
         v-flex.py-2(xs12 sm12)
           svg.svg(id="svg" width="100%" :height="canvasHeight")
             g#canvas
-    v-flex.pr-4(xs12 sm5)
+    v-flex.px-4(xs12 sm5)
       v-layout(row wrap)
         v-flex.py-2(xs12 sm6)
           p 形状
