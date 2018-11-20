@@ -43,176 +43,188 @@ textarea#body {
 <template lang='pug'>
 .d3
   v-container(grid-list-md text-xs-center)
-    v-layout(row wrap)
-      v-flex(xs12 sm2)
-        v-text-field(
-          label='キャンバス高さ' 
-          v-model='canvasHeight' 
-          type="number")
-    v-layout(row wrap)
-      v-flex.py-2(xs12 sm12)
-        svg.svg(id="svg" width="100%" :height="canvasHeight")
-          g#canvas
-    v-layout(row wrap)
-      v-flex.py-2(xs12 sm4)
-        p 形状
-        v-btn-toggle(v-model='shape' @change='onShapeSelected')
-          v-btn(flat value="rounded")
-            span 丸首
-          v-btn(flat value="vneck")
-            span Vネック
-          v-btn(flat value="highneck")
-            span ハイネック
-      v-flex.py-2(xs12 sm4)
-        p 詳細
-        v-btn-toggle(v-model='details' multiple @change='onDetailSelected')
-          v-btn(flat value="sleeved")
-            span 袖あり
-          v-btn(flat value="opened")
-            span 前開き
-      v-flex.py-2(xs12 sm4)
-        p ダウンロード
-        v-btn(@click='onDownloadSVG') SVG
-        v-btn(@click='onDownloadPNG') PNG
+  v-layout(row wrap)
+    v-flex.pl-4.pr-4(xs12 sm7)
+      v-layout(row wrap)
+        v-flex(xs12 sm2)
+          v-text-field(
+            label='キャンバス高さ' 
+            v-model='canvasHeight' 
+            type="number")
+      v-layout(row wrap)
+        v-flex.py-2(xs12 sm12)
+          svg.svg(id="svg" width="100%" :height="canvasHeight")
+            g#canvas
+    v-flex.pr-4(xs12 sm5)
+      v-layout(row wrap)
+        v-flex.py-2(xs12 sm6)
+          p 形状
+          v-btn-toggle(v-model='shape' @change='onShapeSelected')
+            v-btn(flat value="rounded")
+              span 丸首
+            v-btn(flat value="vneck")
+              span Vネック
+            v-btn(flat value="highneck")
+              span ハイネック
+        v-flex.py-2(xs12 sm6)
+          p 詳細
+          v-btn-toggle(v-model='details' multiple @change='onDetailSelected')
+            v-btn(flat value="sleeved")
+              span 袖あり
+            v-btn(flat value="opened")
+              span 前開き
 
-    v-layout(row wrap)
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='着丈' 
-          :value='flatBody["k.height"]' 
-          type="number"
-          @change='onChange("k.height", $event)'
-          @keyup='onChange("k.height", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='肩巾' 
-          :value='flatBody["k.shoulder"]' 
-          type="number"
-          @change='onChange("k.shoulder", $event)'
-          @keyup='onChange("k.shoulder", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='身巾' 
-          :value='flatBody["k.bodyWidth"]' 
-          type="number"
-          @change='onChange("k.bodyWidth", $event)'
-          @keyup='onChange("k.bodyWidth", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='裾巾' 
-          :value='flatBody["k.bottomHemWidth"]' 
-          type="number"
-          @change='onChange("k.bottomHemWidth", $event)'
-          @keyup='onChange("k.bottomHemWidth", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='裾リブ巾' 
-          :value='flatBody["k.bottomRibLength"]' 
-          type="number"
-          @change='onChange("k.bottomRibLength", $event)'
-          @keyup='onChange("k.bottomRibLength", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-layout
-          v-checkbox(hide-details
-            @change='onChangeWithoutEvent("k.useBottomRibSqueeze", $event)'
-            :value='flatBody["k.useBottomRibSqueeze"]'
-          )
+      v-layout(row wrap)
+        v-flex.py-2(xs12 sm3)
           v-text-field(
-            label='裾リブ絞り'
-            :disabled='!flatBody["k.useBottomRibSqueeze"]'
-            :value='flatBody["k.bottomRibSqueeze"]'
+            label='着丈' 
+            :value='flatBody["k.height"]' 
             type="number"
-            @change='onChange("k.bottomRibSqueeze", $event)'
-            @keyup='onChange("k.bottomRibSqueeze", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='首巾' 
-          :value='flatBody["k.neck.width"]' 
-          type="number"
-          @change='onChange("k.neck.width", $event)'
-          @keyup='onChange("k.neck.width", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='首リブ巾' 
-          :value='flatBody["k.neck.thickness"]' 
-          type="number"
-          @change='onChange("k.neck.thickness", $event)'
-          @keyup='onChange("k.neck.thickness", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='首下がり前' 
-          :value='flatBody["k.neck.frontDrop"]' 
-          type="number"
-          @change='onChange("k.neck.frontDrop", $event)'
-          @keyup='onChange("k.neck.frontDrop", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='首下がり後' 
-          :value='flatBody["k.neck.backDrop"]' 
-          type="number"
-          @change='onChange("k.neck.backDrop", $event)'
-          @keyup='onChange("k.neck.backDrop", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='アームホール' 
-          :value='flatBody["k.sleeve.armHole"]' 
-          type="number"
-          @change='onChange("k.sleeve.armHole", $event)'
-          @keyup='onChange("k.sleeve.armHole", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='肩下がり' 
-          :value='flatBody["k.shoulderDrop"]' 
-          type="number"
-          @change='onChange("k.shoulderDrop", $event)'
-          @keyup='onChange("k.shoulderDrop", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='袖長さ' 
-          :value='flatBody["k.sleeve.length"]' 
-          type="number"
-          @change='onChange("k.sleeve.length", $event)'
-          @keyup='onChange("k.sleeve.length", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='袖口巾' 
-          :value='flatBody["k.sleeve.cuffWidth"]' 
-          type="number"
-          @change='onChange("k.sleeve.cuffWidth", $event)'
-          @keyup='onChange("k.sleeve.cuffWidth", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-text-field(
-          label='袖リブ巾' 
-          :value='flatBody["k.sleeve.cuffRibLength"]' 
-          type="number"
-          @change='onChange("k.sleeve.cuffRibLength", $event)'
-          @keyup='onChange("k.sleeve.cuffRibLength", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-layout
-          v-checkbox(hide-details
-            @change='onChangeWithoutEvent("k.sleeve.useCuffRibSqueeze", $event)'
-            :value='flatBody["k.sleeve.useCuffRibSqueeze"]'
-          )
+            @change='onChange("k.height", $event)'
+            @keyup='onChange("k.height", $event)')
+        v-flex.py-2(xs12 sm3)
           v-text-field(
-            label='袖リブ絞り'
-            :disabled='!flatBody["k.sleeve.useCuffRibSqueeze"]'
-            :value='flatBody["k.sleeve.cuffRibSqueeze"]'
+            label='肩巾' 
+            :value='flatBody["k.shoulder"]' 
             type="number"
-            @change='onChange("k.sleeve.cuffRibSqueeze", $event)'
-            @keyup='onChange("k.sleeve.cuffRibSqueeze", $event)')
-      v-flex.py-2(xs12 sm2)
-        v-layout
-          v-checkbox(hide-details
-            @change='onChangeWithoutEvent("k.sleeve.useWidth", $event)'
-            :value='flatBody["k.sleeve.useWidth"]'
-          )
+            @change='onChange("k.shoulder", $event)'
+            @keyup='onChange("k.shoulder", $event)')
+        v-flex.py-2(xs12 sm3)
           v-text-field(
-            label='袖巾'
-            :disabled='!flatBody["k.sleeve.useWidth"]'
-            :value='flatBody["k.sleeve.width"]'
+            label='身巾' 
+            :value='flatBody["k.bodyWidth"]' 
             type="number"
-            @change='onChange("k.sleeve.width", $event)'
-            @keyup='onChange("k.sleeve.width", $event)')
+            @change='onChange("k.bodyWidth", $event)'
+            @keyup='onChange("k.bodyWidth", $event)')
+        v-flex.py-2(xs12 sm3)
+        //-
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='首巾' 
+            :value='flatBody["k.neck.width"]' 
+            type="number"
+            @change='onChange("k.neck.width", $event)'
+            @keyup='onChange("k.neck.width", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='首リブ巾' 
+            :value='flatBody["k.neck.thickness"]' 
+            type="number"
+            @change='onChange("k.neck.thickness", $event)'
+            @keyup='onChange("k.neck.thickness", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='首下がり前' 
+            :value='flatBody["k.neck.frontDrop"]' 
+            type="number"
+            @change='onChange("k.neck.frontDrop", $event)'
+            @keyup='onChange("k.neck.frontDrop", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='首下がり後' 
+            :value='flatBody["k.neck.backDrop"]' 
+            type="number"
+            @change='onChange("k.neck.backDrop", $event)'
+            @keyup='onChange("k.neck.backDrop", $event)')
+        //-
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='アームホール' 
+            :value='flatBody["k.sleeve.armHole"]' 
+            type="number"
+            @change='onChange("k.sleeve.armHole", $event)'
+            @keyup='onChange("k.sleeve.armHole", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='肩下がり' 
+            :value='flatBody["k.shoulderDrop"]' 
+            type="number"
+            @change='onChange("k.shoulderDrop", $event)'
+            @keyup='onChange("k.shoulderDrop", $event)')
+        v-flex.py-2(xs12 sm3)
+        v-flex.py-2(xs12 sm3)
+        //-
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='裾巾' 
+            :value='flatBody["k.bottomHemWidth"]' 
+            type="number"
+            @change='onChange("k.bottomHemWidth", $event)'
+            @keyup='onChange("k.bottomHemWidth", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='裾リブ巾' 
+            :value='flatBody["k.bottomRibLength"]' 
+            type="number"
+            @change='onChange("k.bottomRibLength", $event)'
+            @keyup='onChange("k.bottomRibLength", $event)')
+        v-flex.py-2(xs12 sm3)
+          v-layout
+            v-checkbox(hide-details
+              @change='onChangeWithoutEvent("k.useBottomRibSqueeze", $event)'
+              :value='flatBody["k.useBottomRibSqueeze"]'
+            )
+            v-text-field(
+              label='裾リブ絞り'
+              :disabled='!flatBody["k.useBottomRibSqueeze"]'
+              :value='flatBody["k.bottomRibSqueeze"]'
+              type="number"
+              @change='onChange("k.bottomRibSqueeze", $event)'
+              @keyup='onChange("k.bottomRibSqueeze", $event)')
+        v-flex.py-2(xs12 sm3)
+        //-
+        v-flex.py-2(xs12 sm2)
+          v-text-field(
+            label='袖長さ' 
+            :value='flatBody["k.sleeve.length"]' 
+            type="number"
+            @change='onChange("k.sleeve.length", $event)'
+            @keyup='onChange("k.sleeve.length", $event)')
+        v-flex.py-2(xs12 sm2)
+          v-text-field(
+            label='袖口巾' 
+            :value='flatBody["k.sleeve.cuffWidth"]' 
+            type="number"
+            @change='onChange("k.sleeve.cuffWidth", $event)'
+            @keyup='onChange("k.sleeve.cuffWidth", $event)')
+        v-flex.py-2(xs12 sm2)
+          v-text-field(
+            label='袖リブ巾' 
+            :value='flatBody["k.sleeve.cuffRibLength"]' 
+            type="number"
+            @change='onChange("k.sleeve.cuffRibLength", $event)'
+            @keyup='onChange("k.sleeve.cuffRibLength", $event)')
+        v-flex.py-2(xs12 sm2)
+          v-layout
+            v-checkbox(hide-details
+              @change='onChangeWithoutEvent("k.sleeve.useCuffRibSqueeze", $event)'
+              :value='flatBody["k.sleeve.useCuffRibSqueeze"]'
+            )
+            v-text-field(
+              label='袖リブ絞り'
+              :disabled='!flatBody["k.sleeve.useCuffRibSqueeze"]'
+              :value='flatBody["k.sleeve.cuffRibSqueeze"]'
+              type="number"
+              @change='onChange("k.sleeve.cuffRibSqueeze", $event)'
+              @keyup='onChange("k.sleeve.cuffRibSqueeze", $event)')
+        v-flex.py-2(xs12 sm2)
+          v-layout
+            v-checkbox(hide-details
+              @change='onChangeWithoutEvent("k.sleeve.useWidth", $event)'
+              :value='flatBody["k.sleeve.useWidth"]'
+            )
+            v-text-field(
+              label='袖巾'
+              :disabled='!flatBody["k.sleeve.useWidth"]'
+              :value='flatBody["k.sleeve.width"]'
+              type="number"
+              @change='onChange("k.sleeve.width", $event)'
+              @keyup='onChange("k.sleeve.width", $event)')
+      v-layout(row wrap)
+        v-flex.py-2(xs12 sm12)
+          p ダウンロード
+          v-btn(@click='onDownloadSVG') SVG
+          v-btn(@click='onDownloadPNG') PNG
     //- v-layout(row wrap)
     //-   template(v-for='(v, k, i) in flatBody')
     //-     v-flex(xs2 align-baseline)
@@ -238,7 +250,7 @@ export default {
     return {
       width: undefined,
       height: undefined,
-      canvasHeight: 400,
+      canvasHeight: 600,
       bodyJson: '',
       handles: [],
       knit: undefined,
