@@ -44,8 +44,14 @@ textarea#body {
 .d3
   v-container(grid-list-md text-xs-center)
     v-layout(row wrap)
+      v-flex(xs12 sm2)
+        v-text-field(
+          label='キャンバス高さ' 
+          v-model='canvasHeight' 
+          type="number")
+    v-layout(row wrap)
       v-flex.py-2(xs12 sm12)
-        svg.svg(id="svg" width="100%" height="400")
+        svg.svg(id="svg" width="100%" :height="canvasHeight")
           g#canvas
     v-layout(row wrap)
       v-flex.py-2(xs12 sm4)
@@ -232,11 +238,13 @@ export default {
     return {
       width: undefined,
       height: undefined,
+      canvasHeight: 400,
       bodyJson: '',
       handles: [],
       knit: undefined,
       shape: 'rounded',
-      details: ['sleeved']
+      details: ['sleeved'],
+      canvasScale: 1
     }
   },
   watch: {
@@ -244,6 +252,13 @@ export default {
       if (!nv) return
       this.initD3()
       this.updateD3()
+    },
+    canvasHeight (nv) {
+      this.initD3()
+      this.updateD3()
+      this.$nextTick(() =>{
+        this.onRepaint()
+      })
     }
   },
   computed: {
@@ -374,9 +389,10 @@ export default {
       this.width = bounds.width
       this.height = bounds.height
       
-      const ox = this.width/2 - this.body.neck.width*2
-      const oy = this.height/2 - this.body.height
       const scale = {x: 10*0.4, y: 10*0.4}
+      const ox = (this.width - this.body.neck.width*2*scale.x)/2
+      const hh = this.body.height + this.body.bottomRibLength + this.body.neck.thickness - 10
+      const oy = (this.height - hh*scale.y)/2
       // const scale = {x: 1, y: 1}
       
       this.knit.paths.forEach(paths => {
@@ -488,9 +504,10 @@ export default {
       const bounds = this.svg.node().getBoundingClientRect()
       const width = bounds.width
       const height = bounds.height
+      const mag = 1
       const canvas = d3.select("body").append("canvas")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", width * mag)
+        .attr("height", height * mag)
         .node()
       const ctx = canvas.getContext("2d")
 
@@ -504,7 +521,8 @@ export default {
                             + btoa(unescape(encodeURIComponent(data)))
       const image = new Image()
       image.onload = function () {
-        ctx.drawImage(image, 0, 0);
+        ctx.drawImage(this, 0, 0, width, height, 0, 0, width*mag, height*mag)
+        // ctx.drawImage(image, 0, 0)
         const url = canvas.toDataURL("image/png") 
         const a = d3.select("body").append("a")
         a.attr("class", "downloadLink")
