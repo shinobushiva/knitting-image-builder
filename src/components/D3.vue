@@ -77,7 +77,7 @@ textarea#body {
       v-layout(row wrap)
         v-flex.py-2(xs12 sm3)
           v-text-field(
-            label='着丈' 
+            label='着丈'
             :value='flatBody["k.height"]' 
             type="number"
             @change='onChange("k.height", $event)'
@@ -424,7 +424,8 @@ export default {
       {
         const circles = []
         for (let k in this.knit.handles) {
-          circles.push(this.knit.handles[k])
+          if(!this.knit.handles[k].hidden)
+            circles.push(this.knit.handles[k])
         }
         function drag(d) {
           const v = d.vert

@@ -6,39 +6,45 @@ export default class StandardCollarFactory {
     knit.handles = {
       bodySqueeze: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       },
       sleeveConnection: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       },
       sleeveSqueezeTop: {
-        vert: undefined
+        vert: undefined,
+        hidden: false
       },
       sleeveSqueezeBottom: {
-        vert: undefined
+        vert: undefined,
+        hidden: false
       },
       frontColler: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       },
       backColler: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       },
       bodyRibSqueeze: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       },
       cuffRibSqueeze: {
         vert: undefined,
-        mvert: undefined
+        mvert: undefined,
+        hidden: false
       }
     }
 
     knit.createBody = function(body, neck, sleeve) {
-
-      const bodyAdd = (body.shoulder - body.bodyWidth)/2
       
       const sb = (body.shoulder - body.bottomHemWidth)/2
       const drop = Math.min(neck.frontDrop, neck.backDrop)
@@ -56,12 +62,17 @@ export default class StandardCollarFactory {
       }
       if (!this.handles.bodySqueeze.vert) {
         this.handles.bodySqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
-        this.handles.bodySqueeze.mvert = [-(body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
+        this.handles.bodySqueeze.mvert = [-(body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole]
       }
       if (!this.handles.bodyRibSqueeze.vert) {
         this.handles.bodyRibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb - bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
         this.handles.bodyRibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb + bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
       }
+
+      if (body.bottomRibLength === 0) {
+        this.handles.bodyRibSqueeze.hidden = true
+      }
+
       //around coller and arm
       {
         let path = ''
@@ -84,17 +95,17 @@ export default class StandardCollarFactory {
         {
           const line = [
             [neck.width, 0],
-            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
-            [neck.width + (body.shoulder - neck.width)/2 + bodyAdd, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
+            [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
             this.handles.sleeveConnection.vert,
-            [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
+            [neck.width + (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole]
           ]
           path += this.concatify(this.curvegenerator(line))
         }
         {
           const line = [
-            [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole],
+            [neck.width + (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole],
             this.handles.bodySqueeze.vert,
             [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
           ]
@@ -111,24 +122,24 @@ export default class StandardCollarFactory {
           const line = [
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength],
             this.handles.bodySqueeze.mvert,
-            [-(body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole]
+            [-(body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole]
           ]
           path += this.concatify(this.curvegenerator(line))
         }
         {
           const line = [
-            [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole],
+            [- (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole],
             this.handles.sleeveConnection.mvert,
-            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2 - bodyAdd, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
+            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
             [0, 0]
           ]
           path += this.concatify(this.curvegenerator(line))
         }
         paths.push(path)
       }
-      //
+      // 裾
       {
         let path = ''
         {

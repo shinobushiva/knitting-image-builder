@@ -28,7 +28,7 @@ export default class Knitter {
     const paths = []
     const bodyAdd = (body.shoulder - body.bodyWidth)/2
 
-    const p = neck.width + (body.shoulder - neck.width)/2 + bodyAdd
+    const p = neck.width + (body.bodyWidth - neck.width)/2 + bodyAdd
     let ang = 
       !sleeve.useWidth ? 
         (0 - body.shoulderDrop) / (p - neck.width)
