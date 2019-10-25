@@ -60,7 +60,6 @@ export default class HighNeckFactory {
       if (body.bottomRibLength === 0) {
         this.handles.bodyRibSqueeze.hidden = true
       }
-      
       //around coller and arm
       {
         let path = ''

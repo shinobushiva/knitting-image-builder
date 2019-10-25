@@ -103,7 +103,6 @@ textarea#body {
             type="number"
             @change='onChange("k.bodyCenter", $event)'
             @keyup='onChange("k.bodyCenter", $event)')
-        v-flex.py-2(xs12 sm3)
         //-
         v-flex.py-2(xs12 sm3)
           v-text-field(
@@ -345,7 +344,11 @@ export default {
   },
   mounted () {
     const json = localStorage.getItem('inprogress')
-    if (json && JSON.parse(json).version >= JSON.parse(this.bodyJson).version) this.bodyJson = json
+    if (json && JSON.parse(json).version >= JSON.parse(this.bodyJson).version) 
+      this.bodyJson = json
+    // const handlesJson = localStorage.getItem('inProgressHandles')
+    // if (handleJson) 
+    //   this.handles = JSON.parse(handlesJson)
     this.onRestart()
   },
   methods: {
@@ -361,6 +364,7 @@ export default {
       target[keys[i]] = value
       this.bodyJson = this.toJson(data)
       localStorage.setItem('inprogress', this.bodyJson)
+      // localStorage.setItem('inProgressHandles', this.toJson(this.knit.handles))
     },
     onChange (key, event) {
       if (!event.target) return
@@ -463,7 +467,7 @@ export default {
           .attr("cy", function(d) { return d.vert? d.vert[1] : 0})
           .attr("r", 2)
           .attr("transform", `translate(${ox}, ${oy}), scale(${scale.x}, ${scale.y})`)
-          .style("fill", function(d, i) { return 'orange' })
+          .style("fill", function(d, i) { return d.color ? d.color : 'orange' })
           .style("fill-opacity", 0.5)
           .call(d3.drag()
             .on("start", (d) => {})

@@ -46,10 +46,16 @@ export default class StandardCollarFactory {
         vert: undefined,
         mvert: undefined,
         hidden: false
+      },
+      sleeveShoulderPosition: {
+        vert: undefined,
+        mvert: undefined,
+        hidden: false,
+        color: 'red'
       }
     }
 
-    knit.createBody = function(body, neck, sleeve) {
+    knit.createBody = function(body, neck, sleeve, withSleeve) {
       
       const sb = (body.shoulder - body.bottomHemWidth)/2
       const drop = Math.min(neck.frontDrop, neck.backDrop)
@@ -73,14 +79,23 @@ export default class StandardCollarFactory {
         this.handles.bodyRibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb - bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
         this.handles.bodyRibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb + bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
       }
+      if(!this.handles.sleeveShoulderPosition.vert) {
+        this.handles.sleeveShoulderPosition.vert = [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop]
+        this.handles.sleeveShoulderPosition.mvert = [- (body.shoulder - neck.width)/2, body.shoulderDrop]
+      }
 
       if (body.bottomRibLength === 0) {
         this.handles.bodyRibSqueeze.hidden = true
       }
 
+      if (!withSleeve) {
+        this.handles.sleeveShoulderPosition.hidden = true
+      }
+
       //around coller and arm
       {
         let path = ''
+
         // back collar left lower line
         {
           const line = [
@@ -104,6 +119,12 @@ export default class StandardCollarFactory {
           const line = [
             [neck.width, 0],
             [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
+          ]
+          path += this.concatify(this.curvegenerator(line))
+        }
+        // neck - shoulder - armpit right line
+        {
+          const line = [
             [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
             [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop],
             this.handles.sleeveConnection.vert,
@@ -142,9 +163,9 @@ export default class StandardCollarFactory {
           const line = [
             [- (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole],
             this.handles.sleeveConnection.mvert,
-            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
-            [- (body.shoulder - neck.width)/2, body.shoulderDrop],
+            this.handles.sleeveShoulderPosition.mvert,
+            this.handles.sleeveShoulderPosition.mvert,
+            this.handles.sleeveShoulderPosition.mvert,
             [0, 0]
           ]
           path += this.concatify(this.curvegenerator(line))
@@ -360,7 +381,7 @@ export default class StandardCollarFactory {
       const cb = knit.createCollar(false, 0, body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, knit.handles.backColler, body.height, false, true)
       const cf = knit.createCollar(true, body.bodyCenter, body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, knit.handles.frontCollerTop, body.height, opened, rounded)
       pss.push(cb)
-      pss.push(knit.createBody(body, body.neck, body.sleeve))
+      pss.push(knit.createBody(body, body.neck, body.sleeve, sleeve))
       pss.push(cf)
       if (sleeve) pss.push(knit.createSleeve(body, body.neck, body.sleeve))
   

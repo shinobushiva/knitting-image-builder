@@ -11,6 +11,10 @@ export default class Knitter {
     return line.replace(/M[0-9\-\.]+,[0-9\-\.]+L/, ',')
   }
 
+  skippify (line) { 
+    return line.replace(/M([0-9\-\.]+,[0-9\-\.]+L)/, "m$1,")
+  }
+
   createSleeve(body, neck, sleeve) {
     const calcSeevePoint = function (body, neck, sleeve) {
       const sb = (body.shoulder - body.bottomHemWidth)/2
@@ -95,16 +99,13 @@ export default class Knitter {
         const line = [
           [p - bodyAdd , body.shoulderDrop + sleeve.armHole],
           this.handles.sleeveConnection.vert,
-          [p, body.shoulderDrop]
+          // [p, body.shoulderDrop]
+          this.handles.sleeveShoulderPosition.vert
         ]
         path += this.concatify(this.curvegenerator(line))
       }
       paths.push(path)
     }
-    // const dist = Math.sqrt( 
-    //   Math.pow(this.handles.cuffRibSqueeze.vert.x - p + sx + scx, 2),
-    //   Math.pow(this.handles.cuffRibSqueeze.vert.y - body.shoulderDrop + sy + scy)
-    // )
     //cuff
     {
       const dist = function (a, b) {
