@@ -27,6 +27,11 @@ export default class StandardCollarFactory {
         mvert: undefined,
         hidden: false
       },
+      frontCollerTop: {
+        vert: undefined,
+        mvert: undefined,
+        hidden: false
+      },
       backColler: {
         vert: undefined,
         mvert: undefined,
@@ -168,7 +173,7 @@ export default class StandardCollarFactory {
       return paths
     }
 
-    knit.createCollar = function(width, drop, thickness, handle={}, height, opened=false, rounded=true) {
+    knit.createCollar = function(width, drop, thickness, handle={}, handleTop={}, height, opened=false, rounded=true) {
 
       const hw = width/2
       
@@ -176,15 +181,22 @@ export default class StandardCollarFactory {
         handle.vert = [hw + hw/2, drop - thickness],
         handle.mvert = [hw/2, drop - thickness]
       }
+
+      if (handleTop && !handleTop.vert) {
+        handleTop.vert = [width - thickness, -thickness/2],
+        handleTop.mvert = [thickness, -thickness/2]
+      }
+
       let paths = ''
       {
         const line = [
           [thickness, -thickness/2],
+          handleTop.mvert,
           handle.mvert,
           [hw, drop - thickness]
         ]
         if (!rounded) {
-          line.splice(1, 1)
+          line.splice(1, 2)
           paths += this.linegenerator(line)
         } else {
           paths += this.curvegenerator(line)
@@ -194,10 +206,11 @@ export default class StandardCollarFactory {
         const line = [
           [hw, drop - thickness],
           handle.vert,
+          handleTop.vert,
           [width - thickness, -thickness/2]
         ]
         if (!rounded) {
-          line.splice(1, 1)
+          line.splice(1, 2)
           paths += this.concatify(this.linegenerator(line))
         } else {
           paths += this.concatify(this.curvegenerator(line))
@@ -213,11 +226,12 @@ export default class StandardCollarFactory {
       if (!opened) {
         const line = [
           [width, 0],
+          [handleTop.vert[0] + thickness/2, handleTop.vert[1] + thickness],
           [handle.vert[0] + thickness/2, handle.vert[1] + thickness],
           [hw, drop]
         ]
         if (!rounded) {
-          line.splice(1, 1)
+          line.splice(1, 2)
           paths += this.concatify(this.linegenerator(line))
         } else {
           paths += this.concatify(this.curvegenerator(line))
@@ -227,6 +241,7 @@ export default class StandardCollarFactory {
           const line = [
             [width, 0],
             [handle.vert[0] + thickness/2, handle.vert[1] + thickness],
+            [handleTop.vert[0] + thickness/2, handleTop.vert[1] + thickness],
             [hw + thickness/2, drop]
           ]
           if (!rounded) {
@@ -250,6 +265,7 @@ export default class StandardCollarFactory {
         const line = [
           [hw, drop],
           [handle.mvert[0] - thickness/2, handle.mvert[1] + thickness],
+          [handleTop.mvert[0] - thickness/2, handleTop.mvert[1] + thickness],
           [0, 0]
         ]
         if (!rounded) {
@@ -262,6 +278,7 @@ export default class StandardCollarFactory {
         const line = [
           [hw, drop],
           [handle.mvert[0] - thickness/2, handle.mvert[1] + thickness],
+          [handleTop.mvert[0] - thickness/2, handleTop.mvert[1] + thickness],
           [0, 0]
         ]
         if (!rounded) {
@@ -323,8 +340,8 @@ export default class StandardCollarFactory {
     knit.repaint = (() => {
       const pss = []
 
-      const cb = knit.createCollar(body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, body.height, false, true)
-      const cf = knit.createCollar(body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, body.height, opened, rounded)
+      const cb = knit.createCollar(body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, knit.handles.backColler, body.height, false, true)
+      const cf = knit.createCollar(body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, knit.handles.frontCollerTop, body.height, opened, rounded)
       pss.push(cb)
       pss.push(knit.createBody(body, body.neck, body.sleeve))
       pss.push(cf)
