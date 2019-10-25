@@ -262,7 +262,7 @@ export default {
       handles: [],
       knit: undefined,
       shape: 'rounded',
-      details: ['sleeved', 'opened'],
+      details: ['sleeved'],
       canvasScale: 1
     }
   },
