@@ -1,5 +1,17 @@
 # knitting-image-builder
 
+## Deploy
+
+Setup Heroku git
+```
+heroku git:remote --app safe-reaches-87563
+```
+
+Deploy
+```
+git push heroku master
+```
+
 > A Vue.js project
 
 ## Build Setup
