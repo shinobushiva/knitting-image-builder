@@ -81,6 +81,7 @@ export default class StandardCollarFactory {
       //around coller and arm
       {
         let path = ''
+        // back collar left lower line
         {
           const line = [
             [0, 0],
@@ -89,6 +90,7 @@ export default class StandardCollarFactory {
           ]
           path += this.curvegenerator(line)
         }
+        // back collar right lower line
         {
           const line = [
             [neck.width/2, drop],
@@ -97,6 +99,7 @@ export default class StandardCollarFactory {
           ]
           path += this.curvegenerator(line)
         }
+        // neck - shoulder - armpit right line
         {
           const line = [
             [neck.width, 0],
@@ -108,6 +111,7 @@ export default class StandardCollarFactory {
           ]
           path += this.concatify(this.curvegenerator(line))
         }
+        // armpit - hem right line
         {
           const line = [
             [neck.width + (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole],
@@ -116,6 +120,7 @@ export default class StandardCollarFactory {
           ]
           path += this.concatify(this.curvegenerator(line))
         }
+        // hem top right to left line
         {
           const line = [
             [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength],
@@ -123,6 +128,7 @@ export default class StandardCollarFactory {
           ]
           path += this.concatify(this.linegenerator(line))
         }
+        // hem - armpit left line
         {
           const line = [
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength],
@@ -131,6 +137,7 @@ export default class StandardCollarFactory {
           ]
           path += this.concatify(this.curvegenerator(line))
         }
+        // armpit - shoulder - neck left line
         {
           const line = [
             [- (body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole],
@@ -144,9 +151,10 @@ export default class StandardCollarFactory {
         }
         paths.push(path)
       }
-      // 裾
+      // Hem square
       {
         let path = ''
+        // Hem top line
         {
           const line = [
             [-(body.shoulder - neck.width)/2 + sb, body.height - body.bottomRibLength],
@@ -173,7 +181,7 @@ export default class StandardCollarFactory {
       return paths
     }
 
-    knit.createCollar = function(width, drop, thickness, handle={}, handleTop={}, height, opened=false, rounded=true) {
+    knit.createCollar = function(frontBack, bodyCenter, width, drop, thickness, handle={}, handleTop={}, height, opened=false, rounded=true) {
 
       const hw = width/2
       
@@ -188,23 +196,28 @@ export default class StandardCollarFactory {
       }
 
       let paths = ''
+      // collar top left
       {
         const line = [
           [thickness, -thickness/2],
           handleTop.mvert,
           handle.mvert,
-          [hw, drop - thickness]
+          [hw+bodyCenter, drop - thickness]
         ]
         if (!rounded) {
           line.splice(1, 2)
           paths += this.linegenerator(line)
         } else {
+          if (!frontBack) {
+            line.splice(2, 1)
+          }
           paths += this.curvegenerator(line)
         }
       }
+      // collar top right
       {
         const line = [
-          [hw, drop - thickness],
+          [hw+bodyCenter, drop - thickness],
           handle.vert,
           handleTop.vert,
           [width - thickness, -thickness/2]
@@ -213,9 +226,13 @@ export default class StandardCollarFactory {
           line.splice(1, 2)
           paths += this.concatify(this.linegenerator(line))
         } else {
+          if (!frontBack) {
+            line.splice(2, 1)
+          }
           paths += this.concatify(this.curvegenerator(line))
         }
       }
+      // collar bottom right
       {
         const line = [
           [width - thickness, -thickness/2],
@@ -224,46 +241,56 @@ export default class StandardCollarFactory {
         paths += this.concatify(this.linegenerator(line))
       }
       if (!opened) {
+        // collar bottom right closed
         const line = [
           [width, 0],
           [handleTop.vert[0] + thickness/2, handleTop.vert[1] + thickness],
           [handle.vert[0] + thickness/2, handle.vert[1] + thickness],
-          [hw, drop]
+          [hw+bodyCenter, drop]
         ]
         if (!rounded) {
           line.splice(1, 2)
           paths += this.concatify(this.linegenerator(line))
         } else {
+          if (!frontBack) {
+            line.splice(1, 1)
+          }
           paths += this.concatify(this.curvegenerator(line))
         }
       } else {
+        // collar bottom right opened
         {
           const line = [
             [width, 0],
-            [handle.vert[0] + thickness/2, handle.vert[1] + thickness],
             [handleTop.vert[0] + thickness/2, handleTop.vert[1] + thickness],
-            [hw + thickness/2, drop]
+            [handle.vert[0] + thickness/2, handle.vert[1] + thickness],
+            [hw+bodyCenter + thickness/2, drop]
           ]
           if (!rounded) {
-            line.splice(1, 1)
+            line.splice(1, 2)
             paths += this.concatify(this.linegenerator(line))
           } else {
+            if (!frontBack) {
+              line.splice(1, 1)
+            }
             paths += this.concatify(this.curvegenerator(line))
           }
         }
+        // front opening square
         {
           const line = [
-            [hw + thickness/2, drop],
-            [hw + thickness/2, height],
-            [hw - thickness/2, height],
-            [hw - thickness/2, drop]
+            [hw+bodyCenter + thickness/2, drop],
+            [hw+bodyCenter + thickness/2, height],
+            [hw+bodyCenter - thickness/2, height],
+            [hw+bodyCenter - thickness/2, drop]
           ]
           paths += this.concatify(this.linegenerator(line))
         }
       }
-      if (!drop) {
+      if (drop === 0) {
+        // collar bottom left
         const line = [
-          [hw, drop],
+          [hw+bodyCenter, drop],
           [handle.mvert[0] - thickness/2, handle.mvert[1] + thickness],
           [handleTop.mvert[0] - thickness/2, handleTop.mvert[1] + thickness],
           [0, 0]
@@ -272,12 +299,16 @@ export default class StandardCollarFactory {
           line.splice(1, 1)
           paths += this.concatify(this.linegenerator(line))
         } else {
+          if (!frontBack) {
+            line.splice(2, 1)
+          }
           paths += this.concatify(this.curvegenerator(line))
         }
       } else {
+        // collar bottom left 
         const line = [
-          [hw, drop],
-          [handle.mvert[0] - thickness/2, handle.mvert[1] + thickness],
+          [hw+bodyCenter, drop],
+          [handle.mvert[0]- thickness/2, handle.mvert[1] + thickness],
           [handleTop.mvert[0] - thickness/2, handleTop.mvert[1] + thickness],
           [0, 0]
         ]
@@ -285,9 +316,13 @@ export default class StandardCollarFactory {
           line.splice(1, 1)
           paths += this.concatify(this.linegenerator(line))
         } else {
+          if (!frontBack) {
+            line.splice(2, 1)
+          }
           paths += this.concatify(this.curvegenerator(line))
         }
       }
+      // collar thieckness left
       {
         const line = [
           [0, 0],
@@ -297,30 +332,12 @@ export default class StandardCollarFactory {
       }
       if (opened) {
         const line = [
-          [hw, drop - thickness],
-          [hw + thickness/2, drop]
+          [hw+bodyCenter, drop - thickness],
+          [hw+bodyCenter + thickness/2, drop]
         ]
         paths += this.linegenerator(line)
       }
       return [paths]
-    }
-
-    knit.createOpening = function(body, neck, sleeve) {
-      const hw = neck.width/2
-   
-      let paths = ''
-      {
-        const line = [
-          // handle.mvert,
-          [hw - neck.thickness/2, neck.frontDrop],
-          [hw - neck.thickness/2, body.height],
-          [hw + neck.thickness/2, body.height],
-          [hw + neck.thickness/2, neck.frontDrop]
-        ]
-        paths += this.linegenerator(line)
-      }
-      return [paths]
-  
     }
   }
   static create (body, sleeve=true, opened=false, rounded=true) {
@@ -340,8 +357,8 @@ export default class StandardCollarFactory {
     knit.repaint = (() => {
       const pss = []
 
-      const cb = knit.createCollar(body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, knit.handles.backColler, body.height, false, true)
-      const cf = knit.createCollar(body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, knit.handles.frontCollerTop, body.height, opened, rounded)
+      const cb = knit.createCollar(false, 0, body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, knit.handles.backColler, body.height, false, true)
+      const cf = knit.createCollar(true, body.bodyCenter, body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, knit.handles.frontCollerTop, body.height, opened, rounded)
       pss.push(cb)
       pss.push(knit.createBody(body, body.neck, body.sleeve))
       pss.push(cf)

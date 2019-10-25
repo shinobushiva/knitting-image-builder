@@ -97,6 +97,13 @@ textarea#body {
             @change='onChange("k.bodyWidth", $event)'
             @keyup='onChange("k.bodyWidth", $event)')
         v-flex.py-2(xs12 sm3)
+          v-text-field(
+            label='前中心' 
+            :value='flatBody["k.bodyCenter"]' 
+            type="number"
+            @change='onChange("k.bodyCenter", $event)'
+            @keyup='onChange("k.bodyCenter", $event)')
+        v-flex.py-2(xs12 sm3)
         //-
         v-flex.py-2(xs12 sm3)
           v-text-field(
@@ -255,7 +262,7 @@ export default {
       handles: [],
       knit: undefined,
       shape: 'rounded',
-      details: ['sleeved'],
+      details: ['sleeved', 'opened'],
       canvasScale: 1
     }
   },
@@ -280,6 +287,7 @@ export default {
         shoulderDrop: 5,
         shoulder: 60,
         bodyWidth: 65,
+        bodyCenter: 0,
         height: 52,
         bottomHemWidth: 45,
         bottomRibLength: 5,
