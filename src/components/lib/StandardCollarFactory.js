@@ -468,7 +468,7 @@ export default class StandardCollarFactory {
       const cb = knit.createCollar(
         false, 0, body.neck.width, body.neck.backDrop, body.neck.thickness, knit.handles.backColler, knit.handles.backColler, body.height, false, true)
       pss.push(cb)
-      pss.push(knit.createBody(body, body.neck, body.sleeve, sleeve, rounded))
+      pss.push(knit.createBody(body, body.neck, body.sleeve, rounded))
       if (sleeve) pss.push(knit.createSleeve(body, body.neck, body.sleeve, rounded))
       const cf = knit.createCollar(
         true, body.bodyCenter, body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler, knit.handles.frontCollerTop, body.height, opened, rounded)

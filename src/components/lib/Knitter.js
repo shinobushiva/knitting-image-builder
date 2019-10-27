@@ -174,7 +174,6 @@ export default class Knitter {
           body.shoulderDrop + sy + scy/2 + ncx * cuffRibSqueeze/2
       ]
     }
-
     this.calculateIntersectionForRaglan(body, collarRounded)
 
     {
