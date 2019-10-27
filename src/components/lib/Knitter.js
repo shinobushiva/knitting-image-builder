@@ -181,8 +181,8 @@ export default class Knitter {
       let path = ''
       {
         const line = [
-          
           [neck.width, 0],
+          [p, body.shoulderDrop],
           [p, body.shoulderDrop],
           this.handles.sleeveSqueezeTop.vert,
           [p + sx, body.shoulderDrop + sy]
@@ -258,7 +258,6 @@ export default class Knitter {
       let path = ''
       {
         const line = [
-          this.handles.sleeveShoulderPosition.vert,
           [p + sx, body.shoulderDrop + sy],
           x1,
           p1,
@@ -271,7 +270,6 @@ export default class Knitter {
         ]
         path += this.curvegenerator(line)
       }
-      paths.push(path)
       {
         const line = [
           [p + sx - cx, body.shoulderDrop + sy + cy],
@@ -279,6 +277,7 @@ export default class Knitter {
         ]
         path += this.concatify(this.linegenerator(line))
       }
+      paths.push(path)
     }
     return paths
   }

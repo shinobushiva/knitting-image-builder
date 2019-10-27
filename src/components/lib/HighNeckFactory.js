@@ -1,6 +1,7 @@
 import Knitter from './Knitter'
 export default class HighNeckFactory {
   static setup (knit) {
+
     knit.handles = {
       bodySqueeze: {
         vert: undefined,
@@ -25,6 +26,16 @@ export default class HighNeckFactory {
         mvert: undefined,
         hidden: false
       },
+      frontCollerTop: {
+        vert: undefined,
+        mvert: undefined,
+        hidden: false
+      },
+      backColler: {
+        vert: undefined,
+        mvert: undefined,
+        hidden: false
+      },
       bodyRibSqueeze: {
         vert: undefined,
         mvert: undefined,
@@ -32,9 +43,63 @@ export default class HighNeckFactory {
       },
       cuffRibSqueeze: {
         vert: undefined,
+        mvert: undefined,
         hidden: false
+      },
+      sleeveShoulderPosition: {
+        vert: undefined,
+        mvert: undefined,
+        hidden: false,
+        color: 'red'
       }
     }
+
+    knit.initHandles = function(body, neck, sleeve, withSleeve) {
+      const sb = (body.shoulder - body.bottomHemWidth)/2
+
+      const bottomRibSqueeze = body.useBottomRibSqueeze ? body.bottomRibSqueeze : 0
+
+      if (this.handles.frontColler && !this.handles.frontColler.vert) {
+        this.handles.frontColler.vert = [body.neck.width/2 + body.neck.width/4, body.neck.frontDrop - body.neck.thickness],
+        this.handles.frontColler.mvert = [body.neck.width/4, body.neck.frontDrop - body.neck.thickness]
+      }
+      
+      if (this.handles.backColler && !this.handles.backColler.vert) {
+        this.handles.backColler.vert = [body.neck.width/2 + body.neck.width/4, body.neck.backDrop - body.neck.thickness],
+        this.handles.backColler.mvert = [body.neck.width/4, body.neck.backDrop - body.neck.thickness]
+      }
+
+      if (this.handles.frontCollerTop && !this.handles.frontCollerTop.vert) {
+        this.handles.frontCollerTop.vert = [body.neck.width - body.neck.thickness, -body.neck.thickness/2],
+        this.handles.frontCollerTop.mvert = [body.neck.thickness, -body.neck.thickness/2]
+      }
+
+      if (this.handles.sleeveConnection && !this.handles.sleeveConnection.vert) {
+        this.handles.sleeveConnection.vert = [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
+        this.handles.sleeveConnection.mvert = [- (body.shoulder - neck.width)/2, body.shoulderDrop + sleeve.armHole/2]
+      }
+      if (this.handles.bodySqueeze && !this.handles.bodySqueeze.vert) {
+        this.handles.bodySqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb, body.height - body.bottomRibLength]
+        this.handles.bodySqueeze.mvert = [-(body.bodyWidth - neck.width)/2, body.shoulderDrop + sleeve.armHole]
+      }
+      if (this.handles.bodyRibSqueeze && !this.handles.bodyRibSqueeze.vert) {
+        this.handles.bodyRibSqueeze.vert = [neck.width + (body.shoulder - neck.width)/2 - sb - bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
+        this.handles.bodyRibSqueeze.mvert = [-(body.shoulder - neck.width)/2 + sb + bottomRibSqueeze/2, body.height - body.bottomRibLength/2]
+      }
+      if(this.handles.sleeveShoulderPosition && !this.handles.sleeveShoulderPosition.vert) {
+        this.handles.sleeveShoulderPosition.vert = [neck.width + (body.shoulder - neck.width)/2, body.shoulderDrop]
+        this.handles.sleeveShoulderPosition.mvert = [- (body.shoulder - neck.width)/2, body.shoulderDrop]
+      }
+
+      if (body.bottomRibLength === 0) {
+        this.handles.bodyRibSqueeze.hidden = true
+      }
+
+      if (!withSleeve) {
+        this.handles.sleeveShoulderPosition.hidden = true
+      }
+    }
+
 
     knit.createHighNeckBody = function(body, neck, sleeve) {
     
@@ -222,13 +287,19 @@ export default class HighNeckFactory {
     HighNeckFactory.setup(knit)
     
     if (!sleeve) {
-      knit.handles.sleeveSqueezeTop = undefined
-      knit.handles.sleeveSqueezeBottom = undefined
+      knit.handles.sleeveSqueezeTop.hidden = true
+      knit.handles.sleeveSqueezeBottom.hidden = true
+      knit.handles.cuffRibSqueeze.hidden = true
     }
+
+    knit.handles.backColler.hidden = true
+    knit.handles.frontCollerTop.hidden = true
+    knit.handles.sleeveShoulderPosition.hidden = true
 
     knit.repaint = (() => {
       const pss = []
 
+      knit.initHandles(body, body.neck, body.sleeve, sleeve)
       const cb = knit.createHighNeckCollar(body.neck.width, body.neck.frontDrop, body.neck.thickness, knit.handles.frontColler)
       pss.push(cb)
       pss.push(knit.createHighNeckBody(body, body.neck, body.sleeve))
