@@ -346,9 +346,6 @@ export default {
     const json = localStorage.getItem('inprogress')
     if (json && JSON.parse(json).version >= JSON.parse(this.bodyJson).version) 
       this.bodyJson = json
-    // const handlesJson = localStorage.getItem('inProgressHandles')
-    // if (handleJson) 
-    //   this.handles = JSON.parse(handlesJson)
     this.onRestart()
   },
   methods: {
